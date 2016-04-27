@@ -35,7 +35,8 @@ if sys.stdin.isatty():
 # Load text from stdin
 text = u"".join([l.decode('utf-8') for l in fileinput.input()])
 if text == "":
-    error_exit("Payload text is empty for some reason. Aborting.")
+    logging.info("No payload given. Exiting.")
+    sys.exit()
 
 # Form payload and send to slack
 payload = json.dumps({
@@ -50,3 +51,5 @@ try:
     response = urllib2.urlopen(request).read()
 except urllib2.HTTPError as e:
     error_exit("HTTP %d %s: %s" % (e.code, e.reason, e.read()))
+
+logging.info("Done")
