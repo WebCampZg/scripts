@@ -5,6 +5,7 @@ import os
 import psycopg2
 import sys
 
+
 def abspath(filename):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), filename))
 
@@ -12,7 +13,8 @@ def abspath(filename):
 STATE_FILE = abspath(__file__ + '.dat')
 
 # PK of the currently active cfp
-CFP_ID = 2
+CFP_ID = 3
+
 
 def get_last_id():
     # Create state file if it doesn't exist
@@ -32,6 +34,7 @@ def get_last_id():
 def save_last_id(last_id):
     with open(STATE_FILE, "w") as f:
         f.write(str(last_id))
+
 
 def get_applications(conn, last_id):
     query = """

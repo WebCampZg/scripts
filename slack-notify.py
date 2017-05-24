@@ -8,8 +8,10 @@ import os
 import sys
 import urllib2
 
+
 def abspath(filename):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), filename))
+
 
 def error_exit(msg):
     logging.error(msg)
@@ -41,7 +43,7 @@ if text == "":
 # Form payload and send to slack
 payload = json.dumps({
     "text": text
-});
+})
 
 # Send to slack
 logging.info("Sending data to Slack")

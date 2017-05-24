@@ -7,6 +7,7 @@ import os
 import sys
 import urllib2
 
+
 def abspath(filename):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), filename))
 
