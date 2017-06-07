@@ -5,7 +5,9 @@ import json
 import logging
 import os
 import sys
-import urllib2
+
+from urllib.request import urlopen
+from urllib.error import HTTPError
 
 
 def abspath(filename):
@@ -44,13 +46,13 @@ logging.info("Reading from API...")
 
 try:
     url = 'https://www.entrio.hr/api/get_visitors?key=%s&format=json' % api_key
-    response = urllib2.urlopen(url)
-except urllib2.HTTPError as e:
+    response = urlopen(url)
+except HTTPError as e:
     logging.error(e)
     print(e)
 
 js = response.read()
-data = json.loads(js)
+data = json.loads(js.decode('utf-8'))
 
 # Iterate over dataset, collect new names
 names = []
@@ -76,7 +78,7 @@ for name in names:
 text += "\n\n Total sold: %d" % len(codes)
 
 # Write to stdout
-print(text.encode('utf-8').strip())
+print(text.strip())
 
 # Save processed codes
 with open(STATE_FILE, 'w') as f:

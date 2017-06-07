@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
-
 import os
 import psycopg2
 import sys
@@ -63,7 +61,7 @@ def get_application_count(conn):
     return cur.fetchall()[0][0]
 
 # Connect to database
-conn = psycopg2.connect(database="webcampdb")
+conn = psycopg2.connect(database="webcamp")
 
 # Fetch applications
 last_id = get_last_id()

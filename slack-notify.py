@@ -6,7 +6,9 @@ import json
 import logging
 import os
 import sys
-import urllib2
+
+from urllib.request import urlopen, Request
+from urllib.error import HTTPError
 
 
 def abspath(filename):
@@ -35,7 +37,7 @@ if sys.stdin.isatty():
     error_exit("Not text given in stdin")
 
 # Load text from stdin
-text = u"".join([l.decode('utf-8') for l in fileinput.input()])
+text = "".join([l for l in fileinput.input()])
 if text == "":
     logging.info("No payload given. Exiting.")
     sys.exit()
@@ -49,9 +51,9 @@ payload = json.dumps({
 logging.info("Sending data to Slack")
 
 try:
-    request = urllib2.Request(slack_url, payload)
-    response = urllib2.urlopen(request).read()
-except urllib2.HTTPError as e:
+    request = Request(slack_url, payload.encode('utf-8'))
+    response = urlopen(request).read()
+except HTTPError as e:
     error_exit("HTTP %d %s: %s" % (e.code, e.reason, e.read()))
 
 logging.info("Done")
