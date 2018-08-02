@@ -54,13 +54,24 @@ except HTTPError as e:
 js = response.read()
 data = json.loads(js.decode('utf-8'))
 
+
+def get_custom_field(record, name):
+    fields = [
+        f for k, f in record['custom_fields'].items()
+        if f['name'].lower() == name.lower()]
+    if fields:
+        return fields[0]['value']
+
+
 # Iterate over dataset, collect new names
 names = []
 for record in data:
     code = record['ticket_code']
     category = record['ticket_category']
     if code not in codes:
-        name = '%s %s (%s)' % (record['First name'], record['Last name'], record['ticket_category'])
+        first_name = get_custom_field(record, 'First name')
+        last_name = get_custom_field(record, 'Last name')
+        name = '%s %s (%s)' % (first_name, last_name, record['ticket_category'])
         names.append(name)
         codes.append(code)
 
