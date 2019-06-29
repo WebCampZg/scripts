@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
-
 import fileinput
 import json
 import logging
@@ -20,6 +18,7 @@ def error_exit(msg):
     print(msg, file=sys.stderr)
     sys.exit(1)
 
+
 # Setup logging
 LOG_FORMAT = '%(asctime)s %(levelname)-7s %(message)s'
 LOG_FILE = abspath(__file__ + '.log')
@@ -34,7 +33,7 @@ if not slack_url:
 
 # Check stdin has some text
 if sys.stdin.isatty():
-    error_exit("Not text given in stdin")
+    error_exit("No text given in stdin")
 
 # Load text from stdin
 text = "".join([l for l in fileinput.input()])
